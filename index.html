@@ -1404,11 +1404,11 @@ async function sendChat(){
     hideTyping();
     if(resp.status===429){
       var rl=await resp.json().catch(function(){return{};});
-      appendMsg('error','&#9888; '+(rl.error||'You have reached the message limit. Please wait before sending another message.'));
+      appendMsg('error','&#9888; '+(typeof rl.error==='string'?rl.error:(rl.error&&rl.error.message?rl.error.message:'You have reached the message limit. Please wait before sending another message.')));
       chatHistory.pop();
     }else if(resp.status===503){
       var rl=await resp.json().catch(function(){return{};});
-      appendMsg('error','&#9888; '+(rl.error||'The assistant is busy right now. Please try again in a moment.'));
+      appendMsg('error','&#9888; '+(typeof rl.error==='string'?rl.error:(rl.error&&rl.error.message?rl.error.message:'The assistant is busy right now. Please try again in a moment.')));
       chatHistory.pop();
     }else if(!resp.ok){
       var e=await resp.json().catch(function(){return{};});
